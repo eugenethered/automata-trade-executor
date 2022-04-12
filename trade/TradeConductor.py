@@ -1,15 +1,20 @@
 from cache.holder.RedisCacheHolder import RedisCacheHolder
 from core.trade.CurrencyTradeOrder import CurrencyTradeOrder
 
+from trade.executor.TradeExecutor import TradeExecutor
 from trade.serialize.trade_deserializer import deserialize_currency_trade
 from trade.serialize.trade_serializer import serialize_currency_trade
 
 
 class TradeConductor:
 
-    def __init__(self, options):
+    def __init__(self, options, trade_executor: TradeExecutor):
         self.options = options
         self.cache = RedisCacheHolder()
+        self.trade_executor = trade_executor
+
+    def build_trade_key(self):
+        return self.options['TRADE_KEY']
 
     def store_trade_to_execute(self, trade: CurrencyTradeOrder):
         trade_key = self.build_trade_key()
@@ -21,6 +26,7 @@ class TradeConductor:
         raw_trade = self.cache.fetch(trade_key, as_type=dict)
         return deserialize_currency_trade(raw_trade)
 
-    def build_trade_key(self):
-        return self.options['TRADE_KEY']
-
+    def perform_trade(self):
+        trade = self.fetch_trade_to_execute()
+        updated_trade = self.trade_executor.trade(trade)
+        self.store_trade_to_execute(updated_trade)
