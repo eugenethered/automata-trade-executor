@@ -1,20 +1,19 @@
 import unittest
 
-from core.trade.CurrencyTradeOrder import CurrencyTradeOrder
+from core.trade.InstrumentTrade import InstrumentTrade
 
-from trade.serialize.trade_serializer import serialize_currency_trade
+from trade.serialize.trade_serializer import serialize_trade
 
 
 class TradeSerializeTestCase(unittest.TestCase):
 
     def test_currency_trade_order_serializes(self):
-        trade = CurrencyTradeOrder('USDT', 'BTC', 10, 'BUY')
-        actual = serialize_currency_trade(trade)
+        trade = InstrumentTrade('USDT', 'BTC', 10)
+        actual = serialize_trade(trade)
         result = {
-            'currency_from': 'USDT',
-            'currency_to': 'BTC',
-            'quantity': 10,
-            'side': 'BUY'
+            'instrument_from': 'USDT',
+            'instrument_to': 'BTC',
+            'quantity': 10
         }
         self.assertEqual(actual, result)
 

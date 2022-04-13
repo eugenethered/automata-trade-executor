@@ -1,10 +1,9 @@
-from core.trade.CurrencyTradeOrder import CurrencyTradeOrder
+from core.trade.InstrumentTrade import InstrumentTrade
 
 
-def serialize_currency_trade(trade: CurrencyTradeOrder) -> dict:
+def serialize_trade(trade: InstrumentTrade) -> dict:
     return {
-        'currency_from': trade.currency_from,
-        'currency_to': trade.currency_to,
-        'quantity': trade.quantity,
-        'side': trade.side.upper()
+        'instrument_from': trade.instrument_from,
+        'instrument_to': trade.instrument_to,
+        'quantity': trade.quantity
     }

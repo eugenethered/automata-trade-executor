@@ -1,7 +1,7 @@
-from core.trade.CurrencyTradeOrder import CurrencyTradeOrder
+from core.trade.InstrumentTrade import InstrumentTrade
 
 
 class TradeExecutor:
 
-    def trade(self, trade: CurrencyTradeOrder) -> CurrencyTradeOrder:
+    def trade(self, trade: InstrumentTrade) -> InstrumentTrade:
         pass
