@@ -6,7 +6,7 @@ def serialize_trade(trade: InstrumentTrade) -> dict:
     serialized = {
         'instrument_from': trade.instrument_from,
         'instrument_to': trade.instrument_to,
-        'quantity': trade.quantity,
+        'quantity': str(trade.quantity),
         'status': trade.status.value
     }
     if not is_empty(trade.description):

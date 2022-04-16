@@ -1,5 +1,7 @@
+import logging
+
 from cache.holder.RedisCacheHolder import RedisCacheHolder
-from core.trade.InstrumentTrade import InstrumentTrade
+from core.trade.InstrumentTrade import InstrumentTrade, Status
 
 from trade.executor.TradeExecutor import TradeExecutor
 from trade.serialize.trade_deserializer import deserialize_trade
@@ -28,5 +30,8 @@ class TradeConductor:
 
     def perform_trade(self):
         trade = self.fetch_trade_to_execute()
-        updated_trade = self.trade_executor.trade(trade)
-        self.store_trade_to_execute(updated_trade)
+        if trade.status == Status.NEW:
+            updated_trade = self.trade_executor.trade(trade)
+            self.store_trade_to_execute(updated_trade)
+        else:
+            logging.warning(f'Trade is not new, so will not trade -> {trade}')
