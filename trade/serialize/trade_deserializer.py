@@ -10,9 +10,11 @@ def deserialize_trade(trade) -> InstrumentTrade:
     quantity = BigFloat(as_data(trade, 'quantity'))
     status = as_data(trade, 'status')
     description = as_data(trade, 'description')
+    order_id = as_data(trade, 'order_id')
     deserialized_trade = InstrumentTrade(instrument_from, instrument_to, quantity)
     set_status_as_available(deserialized_trade, status)
     set_description_as_available(deserialized_trade, description)
+    set_orderid_as_available(deserialized_trade, order_id)
     return deserialized_trade
 
 
@@ -27,3 +29,6 @@ def set_description_as_available(deserialized_trade, value):
         deserialized_trade.description = value
 
 
+def set_orderid_as_available(deserialized_trade, value):
+    if not is_empty(value):
+        deserialized_trade.order_id = value

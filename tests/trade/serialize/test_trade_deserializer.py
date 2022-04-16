@@ -45,6 +45,23 @@ class TradeDeserializeTestCase(unittest.TestCase):
         self.assertEqual(trade.status, Status.CANCELLED)
         self.assertEqual(trade.description, 'cancelled order:11')
 
+    def test_currency_trade_order_deserializes_with_status_and_description_and_order_id(self):
+        raw_trade = {
+            'instrument_from': 'USDT',
+            'instrument_to': 'BTC',
+            'quantity': '10',
+            'status': 'executed',
+            'description': 'order executed',
+            'order_id': '459396662'
+        }
+        trade = deserialize_trade(raw_trade)
+        self.assertEqual(trade.instrument_from, 'USDT')
+        self.assertEqual(trade.instrument_to, 'BTC')
+        self.assertEqual(trade.quantity, BigFloat('10'))
+        self.assertEqual(trade.status, Status.EXECUTED)
+        self.assertEqual(trade.description, 'order executed')
+        self.assertEqual(trade.order_id, '459396662')
+
 
 if __name__ == '__main__':
     unittest.main()

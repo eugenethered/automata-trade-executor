@@ -42,6 +42,19 @@ class TradeSerializeTestCase(unittest.TestCase):
         }
         self.assertEqual(actual, result)
 
+    def test_currency_trade_order_serializes_with_status_and_description_and_order_id(self):
+        trade = InstrumentTrade('USDT', 'BTC', BigFloat('10'), Status.EXECUTED, 'Order Executed', '459396662')
+        actual = serialize_trade(trade)
+        result = {
+            'instrument_from': 'USDT',
+            'instrument_to': 'BTC',
+            'quantity': '10.0',
+            'status': 'executed',
+            'description': 'Order Executed',
+            'order_id': '459396662'
+        }
+        self.assertEqual(actual, result)
+
 
 if __name__ == '__main__':
     unittest.main()
