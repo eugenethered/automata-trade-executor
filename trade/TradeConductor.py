@@ -13,9 +13,6 @@ class TradeConductor:
         self.trade_repository = trade_repository
         self.trade_executor = trade_executor
 
-    def build_trade_key(self):
-        return self.options['TRADE_KEY']
-
     def store_submitted_trade(self, trade: InstrumentTrade):
         self.trade_repository.store_trade(trade)
 
