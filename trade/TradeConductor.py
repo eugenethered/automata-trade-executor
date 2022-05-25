@@ -27,4 +27,4 @@ class TradeConductor:
             updated_trade = self.trade_executor.trade(trade)
             self.store_submitted_trade(updated_trade)
         else:
-            self.log.warning(f'Trade is not new, so will not trade -> {trade}')
+            self.log.debug(f'Trade is not new, so will not trade -> {trade}')
