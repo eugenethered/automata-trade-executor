@@ -22,7 +22,7 @@ class TradeConductor:
 
     def perform_trade(self):
         trade = self.fetch_trade_to_submit()
-        if trade.status == Status.NEW:
+        if trade is not None and trade.status == Status.NEW:
             self.log.info(f'About to execute trade:[{trade}]')
             updated_trade = self.trade_executor.trade(trade)
             self.store_submitted_trade(updated_trade)
